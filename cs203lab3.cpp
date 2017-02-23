@@ -1,6 +1,6 @@
 // ------------------------------------------------------
 // Name: Josiah Zailabdeen, Ki Hoon Kim CS 203 Lab 03
-// Description: this program will create a file on the main directory with R records of the type Data.
+// Description: this program will read a text file from the command line and calculate a statistic based on the input file.
 // ------------------------------------------------------
 #include <iostream>
 #include <cmath>
@@ -11,23 +11,38 @@
 
 using namespace std; 
 
-const int LINE = 6;
+// our width for the setw function 
 const int w = 5;
 
 void printFile(ifstream  *fin);
-void computeMean(ifstream *fin);
-
+double computeMean(ifstream *fin);
+double computeStandardDeviation(ifstream  *fin);
+void printMeanAndDeviation(ifstream *fin);
 
 int main(int argc, char *argv[])
 {	
 	ifstream fin(argv[1]);
-	cout << argc <<endl;
-	printFile(&fin);
-	
-	computeMean(&fin);
+	if(fin)
+	{
+		printFile(&fin);
+		printMeanAndDeviation(&fin);
+	}
+	else
+	{
+		cout << "File does not exist." << endl;
+	}
 }
 
-void computeMean(ifstream *fin)
+void printMeanAndDeviation(ifstream *fin)
+{
+	double mean = computeMean(fin);
+	cout << "The mean is: " << mean << endl;
+	
+	double sDev = computeStandardDeviation(fin);
+	cout << "The standard deviation is: " << sDev << endl;
+}
+
+double computeMean(ifstream *fin)
 {
 	int count = 0;
 	double sum = 0;
@@ -44,17 +59,18 @@ void computeMean(ifstream *fin)
 			count++;
 		}
 	}
+	
 	mean = sum / count;
-	cout << "mean is " << mean  << endl;
 	
 	//reposition the read pointer back to the beginning of the file
 	fin->clear();
 	fin->seekg(ios::beg);
+	return mean;
 }
 
 void printFile(ifstream  *fin)
 {
-	int count =1;
+	int count = 1;
 	int value;
 	while(*fin)
 	{
@@ -69,9 +85,32 @@ void printFile(ifstream  *fin)
 			count++;
 		}
 	}
+	cout << endl;
 	
 	//reposition the read pointer back to the beginning of the file
 	fin->clear();
 	fin->seekg(ios::beg);
 }
 
+double computeStandardDeviation(ifstream  *fin)
+{
+	int count = 0;
+	double mean = computeMean(fin);
+	double value;
+	double sum = 0;
+	double sDev;
+	while(*fin)
+	{
+		*fin >> value;
+		
+		if(*fin)
+		{
+			value = pow(value - mean, 2);
+			sum += value;
+			count++;
+		}
+	}
+	sum = sum / count;
+	sDev = sqrt(sum);
+	return sDev;
+} 
