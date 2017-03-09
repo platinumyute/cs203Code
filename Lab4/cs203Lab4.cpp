@@ -77,6 +77,8 @@ void SelectedCube()
 	{
 		cout << errorMessage << endl;
 	}
+	
+	delete cb; 
 }
 
 void SelectedSphere()
@@ -99,6 +101,8 @@ void SelectedSphere()
 	{
 		cout << errorMessage << endl;
 	}
+	
+	delete sp;
 }
 void SelectedCylinder()
 {
@@ -132,5 +136,6 @@ void SelectedCylinder()
 	{
 		cout << errorMessage << endl;
 	}
-	//ask about releasing classes 
+	
+	delete cy;
 }          
