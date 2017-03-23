@@ -5,40 +5,42 @@
 #include <cmath>
 #include <iomanip>
 
-
 //width for iomanip setw
 const int w = 7;	
 
-
 using namespace std;
 
+//***********************************
 //start of prime class prototype
+//***********************************
+
 class prime
 {
 	private:
 		int userInput;
 		int numOfPrimes;
 		int *array;
-	
+		
+		bool isPrime(int value);	
+		int GetPrimeCount();
+		
 	public:
 		//constructors
 		prime();
 		prime(int userInput);
 		
-		
 		void LoadArrayWithPrimes();
 		void print();
-		
-		//set to private later
-		bool isPrime(int value);	
-		int GetPrimeCount();
-		
 		
 		//deconstructors;
 		~prime();
 		
 };
+
+//***********************************
 // end of prototype
+//***********************************
+
 
 //**********************************
 //start of prime class definitions
@@ -136,4 +138,9 @@ prime::~prime()
 {
 	delete [] this->array;
 }
+
+//**********************************
+//end of prime class definitions
+//**********************************
+
 #endif
